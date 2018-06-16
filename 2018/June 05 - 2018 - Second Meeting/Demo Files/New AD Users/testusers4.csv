@@ -1,0 +1,4 @@
+Samaccountname,Userprincipalname,Name,surname,givenname,initials,Department,Title,Path,Password
+Demo4userA,Demo4userA@acme.com,Harvey Banthem,Banthem,Harvey,A,IT,IT Analyst,"OU=IT,OU=Demo,OU=Users,OU=HAPPYTRAILS,DC=happytrails,DC=loc",Ab12345!@!
+Demo4userB,Demo4userB@acme.com,Lucy Kohler,Kohler,Lucy,B,Marketing,Sales Lead,"OU=Marketing,OU=Demo,OU=Users,OU=HAPPYTRAILS,DC=happytrails,DC=loc",Ab12345!@!
+Demo4userC,Demo4userC@acme.com,Heather Friedmont,Friedmont,Heather,C,IT,IT Analyst,"OU=Marketing,OU=Demo,OU=Users,OU=HAPPYTRAILS,DC=happytrails,DC=loc",Ab12345!@!

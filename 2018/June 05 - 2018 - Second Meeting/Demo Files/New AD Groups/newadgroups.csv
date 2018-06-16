@@ -1,0 +1,7 @@
+samaccountname,name,path,Description,groupscope,groupcategory
+Security-Group1,Security-Group1,"OU=Groups,OU=Demo,OU=Users,OU=test,DC=test,DC=loc",Applies Security Level 1,Global,Security
+Security-Group2,Security-Group2,"OU=Groups,OU=Demo,OU=Users,OU=test,DC=test,DC=loc",Applies Security Level 2,Global,Security
+Security-Group3,Security-Group3,"OU=Groups,OU=Demo,OU=Users,OU=test,DC=test,DC=loc",Applies Security Level 3,Global,Security
+Security-Group4,Security-Group4,"OU=Groups,OU=Demo,OU=Users,OU=test,DC=test,DC=loc",Applies Security Level 4,Global,Security
+Security-Group5,Security-Group5,"OU=Groups,OU=Demo,OU=Users,OU=test,DC=test,DC=loc",Applies Security Level 5,Global,Security
+Security-Group6,Security-Group6,"OU=Groups,OU=Demo,OU=Users,OU=test,DC=test,DC=loc",Applies Security Level 6,Global,Security
