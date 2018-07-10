@@ -1,0 +1,14 @@
+#region Commands that doesn't respect erroraction - get-aduser
+Get-Content .\ExternalDemoFile9.ps1
+.\ExternalDemoFile9.ps1
+#endregion
+
+#region Alternatives
+Get-Content .\ExternalDemoFile11.ps1
+.\ExternalDemoFile11.ps1
+
+Get-Content .\ExternalDemoFile12.ps1
+.\ExternalDemoFile12.ps1
+
+#endregion
+exit-pssession

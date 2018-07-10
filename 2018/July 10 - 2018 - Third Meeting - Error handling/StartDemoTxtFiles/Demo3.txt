@@ -1,0 +1,48 @@
+
+#Trap - This is what we had for error handling in PowerShell v1
+#It has uses....but.....its not as flexible as everything else
+#Trap only triggers on terminating errors
+Get-Content .\ExternalDemoFile15.ps1
+.\ExternalDemoFile15.ps1
+
+#If we use silentlycontinue or continue.....
+Get-Content .\ExternalDemoFile16.ps1
+.\ExternalDemoFile16.ps1
+#The trap never caught....
+
+#Thankfully we are no longer on PowerShell V1 anymore....
+#We can now use Try/Catch
+Get-Content .\ExternalDemoFile17.ps1
+.\ExternalDemoFile17.ps1
+
+#Now why is this better than Trap?
+Get-Content .\ExternalDemoFile18.ps1
+.\ExternalDemoFile18.ps1
+
+Get-Content .\ExternalDemoFile19.ps1
+.\ExternalDemoFile19.ps1
+
+#### Try/Catch Advanced
+
+#Specific exception try/catch
+Get-Content .\ExternalDemoFile10.ps1
+.\ExternalDemoFile10.ps1
+
+#What happens when you don't have the exception listed?
+Get-Content .\ExternalDemoFile10a.ps1
+.\ExternalDemoFile10a.ps1
+
+#Try\Catch\Finally
+#what's the difference between standard try/catch and try/catch/finally?
+Get-Content .\ExternalDemoFile14.ps1
+.\ExternalDemoFile14.ps1
+
+#PSItem automatic variable
+#PSItem -eq $_
+#This is the current item in the pipeline....aka - $Error[0]
+Get-Content .\ExternalDemoFile20.ps1
+.\ExternalDemoFile20.ps1
+
+#To prove this here is the same command but using $_ instead of $PSItem
+Get-Content .\ExternalDemoFile21.ps1
+.\ExternalDemoFile21.ps1

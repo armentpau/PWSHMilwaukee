@@ -1,0 +1,176 @@
+#region automatic variables
+
+#region error variable
+#clear the error array
+$Error.clear()
+#Generate an error by looking for a non-existent file
+Get-Item c:\fileDoesntexist.txt
+#Check the contents of the error array
+$Error
+#Generate a new error by looking for a non-existent file
+Get-Item c:\filedoesntexist2.txt
+#Check the contents of the error array
+$Error
+#Let's get the most recently returned error
+$error[0]
+#Get the properties of the error object
+$Error | Get-Member
+#Simplified error message
+$Error[0].tostring()
+#Get the target object of the command that generated the error
+$Error[0].TargetObject
+#A little more details and an easier to read error message
+$Error[0].categoryinfo
+#A little deception sometimes - remember we are dealing with objects not strings
+$Error[0].Exception
+$Error[0].Exception | Get-Member
+#Knowing this we can look for the full name of the exception
+$Error[0].Exception.GetType().fullname
+#You can get the stack trace of the command that generated the error if
+#the error was created by a script - this does not work from an interactive console
+# unless you run a script
+$Error[0].scriptstacktrace
+Start-Process powershell
+#endregion
+
+#region $?
+
+#$? can be used to determine if the previous command completed successfully
+#Example
+Test-Connection localhost -Count 1
+#What is the status of the command?
+$?
+#But this isn't always accurate
+Get-Content .\ExternalDemoFile3a.ps1
+.\ExternalDemoFile3a.ps1
+
+#And you need to be careful about subsequent commands
+Get-Content .\ExternalDemoFile5.ps1
+#Let's execute the script
+.\ExternalDemoFile5.ps1
+
+#endregion
+
+#region LastExitCode
+#This one is quick
+Get-Content .\ExternalDemoFile2.ps1
+.\ExternalDemoFile2.ps1
+#Let's look at the exit code now
+$LastExitCode
+#Ok thats nice and all....
+#But how can it be used?
+Get-Content .\ExternalDemoFile4.ps1
+.\ExternalDemoFile4.ps1 -path1
+$LastExitCode
+.\ExternalDemoFile4.ps1 -path2
+$LastExitCode
+#Awww that's nice and all but...
+#How does this help me?
+#What is exit code 0?
+Read-Host
+#Exit code 0 is the exit code meaning success
+#Anything else likely indicates an error
+#Using this with $?
+Get-Content .\ExternalDemoFile6.ps1
+.\ExternalDemoFile6.ps1
+
+#endregion
+
+#endregion
+
+#region ErrorAction
+$Error.clear()
+#The default action is the same as specifying continue
+Get-Item c:\nonexistantfile -ErrorAction Continue
+$error[0]
+
+#Setting erroraction to ignore
+$Error.clear()
+Get-Item c:\nonexistantfile -ErrorAction Ignore
+$error[0]
+
+#Setting erroraction to inquire
+$Error.clear()
+Get-Item c:\nonexistantfile -ErrorAction Inquire
+$error[0]
+
+
+#Setting erroraction to SilentlyContinue - you should not see an error message
+$Error.clear()
+Get-Item c:\nonexistantfile -ErrorAction SilentlyContinue
+$error[0]
+
+#Setting erroraction to Stop - the command would stop - and creates a terminating error
+$Error.clear()
+Get-Item c:\nonexistantfile -ErrorAction Stop
+$error[0]
+
+#we can't do suspend unless we did a workflow - workflows are rare to find out in the wild - and is an advanced ability
+Read-Host
+#endregion
+
+#region ErrorVariable
+#You can use the errorVariable to store a value and use it later on
+#This is particularly useful when you may have mutliple commands which COULD error
+#Before your logic statement
+$Error.clear()
+Stop-Process -Name invalidprocess -ErrorAction SilentlyContinue -ErrorVariable ProcessError
+Stop-Process -Name invalidProcess2 -ErrorAction stop
+#If we look at the error variable
+$error
+#Notice that if we tried to do a logic process on $error[0] it would
+#Be going against the second error - not the first
+#Value of ProcessError
+$ProcessError
+#And if we use that variable to evaluate if we encountered an error
+#On the first command...
+if ($ProcessError) { Write-Output "Something is not right here....." }
+
+#Kinda a less known thing with ErrorVariable
+#Putting a + in front of the ErrorVariable name will append the value to the variable
+#Example:
+$CustomErrorVariable
+Stop-Process -Name invalidprocess -ErrorAction SilentlyContinue -ErrorVariable CustomErrorVariable
+
+#Let's look at the value here
+$customErrorVariable
+
+#Let's append to the error variable
+Stop-Process -Name invalidNewprocess -ErrorAction SilentlyContinue -ErrorVariable +CustomErrorVariable
+
+#BUT!
+$CustomErrorVariable
+
+#endregion
+
+
+#### Try/Catch Basics
+#We have some support functions to help with this
+#The following helper function creates a terminating error
+New-TerminatingError
+#The following helper function creates a non-terminating error
+New-NonTerminatingError
+
+
+#region Terminating Error In Try/Catch Block
+Get-Content .\ExternalDemoFile13.ps1
+.\ExternalDemoFile13.ps1
+#endregion
+
+#region Non Terminating Error In Try/Catch Block
+Get-Content .\ExternalDemoFile7.ps1
+.\ExternalDemoFile7.ps1
+#endregino
+
+#region Make A Non Terminating Error A Terminating Error pt1
+Get-Content .\ExternalDemoFile8a.ps1
+.\ExternalDemoFile8a.ps1
+#endregion
+
+#region Make A Non Terminating Error A Terminating Error pt2
+Get-Content .\ExternalDemoFile8b.ps1
+.\ExternalDemoFile8b.ps1
+#endregion
+
+#now we are connecting to the domain controller
+Enter-PSSession -ComputerName "192.168.3.10" -Credential $credential

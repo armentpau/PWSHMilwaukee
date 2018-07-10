@@ -1,0 +1,2 @@
+﻿Get-Item "c:\nonexistantfile"
+
